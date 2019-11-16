@@ -1,0 +1,6 @@
+<IfModule mod_rewrite.c>
+   RewriteEngine on
+   RewriteCond %{REQUEST_URI} !views/index.php
+   RewriteCond %{REQUEST_URI} !media/*.*
+   RewriteRule ^(.*)$ views/index.php [QSA,NC,L]
+</IfModule>
