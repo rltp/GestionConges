@@ -69,6 +69,6 @@
         </span>
     </fieldset>
     <span>
-        <input type="submit" value="Envoyer">
+        <input type="submit" value="Envoyer" style="margin: 10px auto">
     </span>
 </form>

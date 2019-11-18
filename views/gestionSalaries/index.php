@@ -14,13 +14,17 @@
                     $_POST =  array_intersect_key($_POST, array_flip(array('lastname', 'firstname', 'email', 'phone', 'function', 'contract', 'date', 'RTT', 'CP', 'situation', 'address', 'sexe', 'nationality', 'birthday')));
                     foreach($_POST as $key => $value) if(empty($value)) unset($_POST[$key]);
                     foreach(($data = filter_var_array($_POST, $edit_args)) as $key => $value) if($value === false) array_push($errors, $edit_args[$key]["error"]);
+                    $isCDI = (date_diff(date_create($data['date']), date_create(date("d-m-y")))->days >30);
+                    var_dump(date_diff(date_create($data['date']), date_create(date("d-m-y"))));
+                    if(!$isCDI && $data['contract'] == "CDD" && $data['CP']>0) array_push($errors, "CP trop important pour un CDD en période d'essai");
+                    if($isCDI && $data['function'] == "E" && $data['RTT']>10) array_push($errors, "RTT trop important pour un enseignant");
+                    if($isCDI && $data['function'] == "P" && $data['RTT']>5) array_push($errors, "RTT trop important pour un personnel administratif");
                     if(empty($errors)) if(($sql = addSalaried($data)) !== null) array_push($errors, $sql);
                 }
 
                 include("add.php");
                 break;
             case "modifier":
-
                 if($_SESSION['id'] == $parameter) header("location: /gestionSalaries");
 
                 if(isset($_POST['lastname'], $_POST['firstname'], $_POST['phone'], $_POST['function'], $_POST['contract'])){

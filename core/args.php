@@ -43,17 +43,19 @@
         "date" =>
             array(
                 "filter" => FILTER_VALIDATE_REGEXP,
-                "options"=> array("regexp"=>"/^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/"),
+                "options"=> array("regexp"=>"/^([0-2][0-9]|(3)[0-1])(\-)(((0)[0-9])|((1)[0-2]))(\-)\d{4}$/"),
                 "error" => "La  date d'embauche doit être sous forme aaaa-mm-jj"
             ),
         "RTT" => array(
-            "filter" => FILTER_VALIDATE_INT,
-            "error" => "Les RTT doivent être des valeurs numeriques"
+            "filter" => FILTER_VALIDATE_REGEXP,
+            "options"=> array("regexp"=>"/^(?:[1-9]|0[1-9]|10)$/"),
+            "error" => "Les RTT doivent être des valeurs numeriques compris entre 0 et 10"
         ),
         "CP" => 
             array(
-            "filter" => FILTER_VALIDATE_INT,
-            "error" => "Les congés payés doivent être des valeurs numeriques"
+            "filter" => FILTER_VALIDATE_REGEXP,
+            "options"=> array("regexp"=>"/^\d{1}$|^[1]{1}\d{1}$|^[2]{1}[0-4]{1}$/"),
+            "error" => "Les congés payés doivent être des valeurs numeriques compris entre 0 et 24"
             ),
         "address" => 
             array(
@@ -82,8 +84,8 @@
         "birthday" =>
             array(
                 "filter" => FILTER_VALIDATE_REGEXP,
-                "options"=> array("regexp"=>"/^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/"),
-                "error" => "La  date de naissance doit être sous forme aaaa-mm-jj"
+                "options"=> array("regexp"=>"/^([0-2][0-9]|(3)[0-1])(\-)(((0)[0-9])|((1)[0-2]))(\-)\d{4}$/"),
+                "error" => "La  date de naissance doit être sous forme jj-mm-aaaa"
             ),
         "toID" => 
             array(

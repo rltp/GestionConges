@@ -1,5 +1,5 @@
 <?php if(!empty($_POST) && !empty($errors)) { ?>
-    <div class="messagebox error"><?php foreach($errors as $e) echo $e;?></div>
+    <div class="messagebox error"><u>Erreur :</u><ul><?php foreach($errors as $e) echo "<li>".$e."</li>"; ?></ul></div>
 <?php } ?>
 
 <?php if(!empty($_POST) && empty($errors)) {?>
@@ -44,11 +44,11 @@
         </span>
         <span>
             <label for="date">Date d'embauche</label>
-            <input type="text" name="date" id="date" value="2006-06-19">
+            <input type="text" name="date" id="date" value="19-06-2006">
         </span>
         <span>
             <label for="RTT">Nombre de congés restant RTT</label>
-            <input type="text" name="RTT" id="RTT" value="12">
+            <input type="text" name="RTT" id="RTT" value="10">
         </span>
         <span>
             <label for="CP">Nombre de congés restant payé</label>
@@ -85,10 +85,10 @@
         </span>
         <span>
             <label for="birthday">Date de naissance</label>
-            <input type="text" name="birthday" id="birthday" value="1988-06-19">
+            <input type="text" name="birthday" id="birthday" value="19-06-1988">
         </span>
     </fieldset>
     <span>
-        <input type="submit" value="Envoyer">
+        <input type="submit" value="Envoyer" style="margin: 10px auto">
     </span>
 </form>
