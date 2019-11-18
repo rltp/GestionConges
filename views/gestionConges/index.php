@@ -11,6 +11,7 @@
                 include("list.php");
                 break;
             case "ajout":
+                $infos = getInfos($_SESSION['id']);
                 include("add.php");
                 break;
             case "valider":

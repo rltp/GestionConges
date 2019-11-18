@@ -37,8 +37,7 @@
                 <label for="salarie">Salarié</label>
                 <input type="radio" name="type" id="admin" value="1">
                 <label for="admin">Administrateur</label>
-            </span>
-            
+            </span>     
         </span>
     </fieldset>
     <span>
