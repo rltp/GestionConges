@@ -91,8 +91,6 @@
 
         }
         
-        
-
         // Complete the row of the last week in month, if necessary
 
         if ($dayOfWeek != 7) { 

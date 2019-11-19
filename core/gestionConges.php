@@ -96,6 +96,30 @@
         if(!empty($result)) return $result;
     }
 
+    function getAllConge($status){
+        global $con;
+
+        if (!$stmt = $con->prepare('SELECT * FROM `conges` WHERE status = ?'))
+            die("requete non valide");
+        
+        $stmt->bind_param('i', $status);
+        $stmt->execute();
+        $stmt->store_result();
+        $meta = $stmt->result_metadata(); 
+
+        while ($field = $meta->fetch_field()) {$params[] = &$row[$field->name];}
+
+        call_user_func_array(array($stmt, 'bind_result'), $params); 
+
+        while ($stmt->fetch()) { 
+            foreach($row as $key => $val) $c[$key] = $val;
+            $result[] = $c; 
+        } 
+        $stmt->close();
+
+        if(!empty($result)) return $result;
+    }
+
     function getCongeFromID($id){
         global $con;
 
