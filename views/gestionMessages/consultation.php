@@ -32,7 +32,7 @@
                     foreach($comments as $comment){
                         $salaried = getInfos($comment['fromID']);
             ?>
-                <a class="comment">
+                <content class="comment">
                     <img class="pic" src="/media/upload/Pics/<?= $comment['fromID'] ?>" width="50" height="50"\>
                     <span class="comment_content">
                         <span class="title">
@@ -49,7 +49,7 @@
                         </form>
                     </span>
                     <?php } ?>
-                </a>
+                </content>
             <?php } ?>
             </div>
             <form action="" method="post">

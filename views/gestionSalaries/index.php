@@ -24,6 +24,7 @@
                 include("add.php");
                 break;
             case "modifier":
+                if(empty($parameter)) header("location: /gestionSalaries");
                 if($_SESSION['id'] == $parameter) header("location: /gestionSalaries");
 
                 if(isset($_POST['lastname'], $_POST['firstname'], $_POST['phone'], $_POST['function'], $_POST['contract'])){
