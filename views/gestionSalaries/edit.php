@@ -1,5 +1,5 @@
 <?php if(!empty($_POST) && !empty($errors)) {?>
-    <div class="messagebox error"><?php foreach($errors as $e) echo $e;?></div>
+    <div class="messagebox error"><u>Erreur :</u><ul><?php foreach($errors as $e) echo "<li>".$e."</li>"; ?></ul></div>
 <?php } ?>
 
 <?php if(!empty($_POST) && empty($errors)) {?>

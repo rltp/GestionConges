@@ -1,3 +1,7 @@
+<?php if(!empty($_POST) && !empty($errors)) {?>
+    <div class="messagebox error"><u>Erreur :</u><ul><?php foreach($errors as $e) echo "<li>".$e."</li>"; ?></ul></div>
+<?php } ?>
+
 <div class="comments">
     <div class="talks">
         <h3>Discussions</h3>

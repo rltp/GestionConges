@@ -92,5 +92,23 @@
             "filter" => FILTER_VALIDATE_INT,
             "error" => "ID non valide"
             )
+        "typeConge" =>
+            array(
+                "filter" => FILTER_VALIDATE_REGEXP,
+                "options"=> array("regexp"=>"/^(RTT|CP)$/"),
+                "error" => "Le type de congé ne doit pas etre autre que les deux options"
+            ),
+        "startday" =>
+            array(
+                "filter" => FILTER_VALIDATE_REGEXP,
+                "options"=> array("regexp"=>"/^([0-2][0-9]|(3)[0-1])(\-)(((0)[0-9])|((1)[0-2]))(\-)\d{4}$/"),
+                "error" => "La  date du debut de congé doit être sous forme aaaa-mm-jj"
+            ),
+        "endDay" =>
+            array(
+                "filter" => FILTER_VALIDATE_REGEXP,
+                "options"=> array("regexp"=>"/^([0-2][0-9]|(3)[0-1])(\-)(((0)[0-9])|((1)[0-2]))(\-)\d{4}$/"),
+                "error" => "La  date de fin de congé doit être sous forme aaaa-mm-jj"
+            ),d
     );
 ?>
