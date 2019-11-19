@@ -1,6 +1,6 @@
 <?php 
-$errors = array();
-if(isset($_POST['typeConge']), $_POST['startDay'],$_POST['endDay']))){
+if(isset($_POST['typeConge'], $_POST['startDay'],$_POST['endDay'])){
+    $errors = array();
     $edit_args =  array_intersect_key($args, array_flip(array('typeConge', 'startDay', 'endDay')));
     $_POST =  array_intersect_key($_POST, array_flip(array('typeConge', 'startDay', 'endDay')));
     foreach($_POST as $key => $value) if(empty($value)) unset($_POST[$key]);
@@ -12,7 +12,7 @@ if(!empty($_POST) && !empty($errors)) {?>
     <div class="messagebox error"><u>Erreur :</u><ul><?php foreach($errors as $e) echo "<li>".$e."</li>"; ?></ul></div>
 <?php } ?>
 
-<?php if(!empty($_POST) && empty($errors)) {?>
+<?php if(!empty($_POST) && isset($errors) && empty($errors)) {?>
     <div class="messagebox success">Congé ajouté</div>
 <?php } ?>
 
@@ -48,11 +48,11 @@ if(!empty($_POST) && !empty($errors)) {?>
         </span>
         <span>
             <label for="startday">Date de début</label>
-            <input type="text" name="startDay" id="startsay" value="15-09-2020">
+            <input type="text" name="startDay" id="startDay" value="15-09-2020">
         </span>
         <span>
             <label for="endday">Date de fin</label>
-            <input type="text" name="endDay" id="endday" value="18-09-2020">
+            <input type="text" name="endDay" id="endDay" value="18-09-2020">
         </span>
     </fieldset>
     <span>

@@ -26,4 +26,18 @@
 
         if(!empty($result[0])) return $result[0];
     }
+
+    function addConge($id, $type, $start, $end){
+        global $con;
+        $stmt;
+        try{
+            if(!$stmt = $con->prepare("INSERT INTO Conges (salaried, type, date, start, end, status) VALUES(?, ?, NOW(), ?, ?, 0)")) throw new Exception("Requete non valide");
+            $stmt->bind_param('isss', $id, $type, $start, $end);
+            if(!$stmt->execute()) throw new Exception("Requete non executé");
+            if($stmt->affected_rows == 0) throw new Exception("Aucune ligne affecté");
+            $stmt->close();
+        }catch(Exception $e){
+            return $e->getMessage();
+        }
+    }
 ?>
