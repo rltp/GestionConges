@@ -11,7 +11,7 @@
             <div class="dropdown-content">
                 <label>Connecté en tant que <strong><?= $_SESSION['name']?></strong></label >
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item"  <?= ($view == "") ? "active": "" ?> href="/">Acceuil</a>
+                <a class="dropdown-item"  <?= ($view == "") ? "active": "" ?> href="/">Accueil</a>
                 <?php if(isAllowedToDisplay(0)) {?><a class="dropdown-item" <?= ($view == "gestionConges") ? "active": "" ?> href="/gestionConges">Gestion des congés</a><?php } ?>
                 <?php if(isAllowedToDisplay(0)) {?><a class="dropdown-item" <?= ($view == "gestionMessages") ? "active": "" ?> href="/gestionMessages">Gestion des messages</a><?php } ?>
                 <?php if(isAllowedToDisplay(1)) {?><a class="dropdown-item" <?= ($view == "gestionSalaries") ? "active": "" ?> href="/gestionSalaries">Gestion des salariés</a><?php } ?>

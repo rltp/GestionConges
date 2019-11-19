@@ -606,3 +606,36 @@ pop {
     width: 25px;
     height: 25px;
 }
+
+.calendar{
+    border: 1px solid #e1e4e8;
+    border-radius: 10px;
+    min-height: 50%;
+    min-width: 100%;
+}
+
+.calendar caption{
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.calendar caption a{
+    text-decoration: none !important;
+    color: #e36209;
+}
+
+.calendar td.day.await {
+    background: #057aff;
+    border-radius: 5px;
+    color: #fff;
+}
+.calendar td.day.denied {
+    background: #721c24;
+    border-radius: 5px;
+    color: #fff;
+}
+.calendar td.day.allowed {
+    background: #155724;
+    border-radius: 5px;
+    color: #fff;
+}

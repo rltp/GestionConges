@@ -7,7 +7,7 @@
         $monthOfYear = array("Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre");
 
         // What is the first day of the month in question?
-        $firstDayOfMonth = mktime(0,0,0,$month,1,$year);
+        $firstDayOfMonth = mktime(0,0,0,$month,1,$year)-1;
 
         // How many days does this month contain?
         $numberDays = date('t',$firstDayOfMonth);
@@ -21,14 +21,13 @@
 
         // What is the index value (0-6) of the first day of the
         // month in question.
-        $dayOfWeek = $dateComponents['wday']-1;
-
+        $dayOfWeek = $dateComponents['wday'];
         // Create the table tag opener and day headers
 
         $calendar = "<table class='calendar'>";
-        $calendar .= "<caption>$monthName $year</caption>";
         $calendar .= "<caption>
                         <a href='/gestionConges/liste/".((($month%12-1))? $year : $year-1)."/".(($month%12 -1) ? $month -1 : 12)."'> ← </a>
+                        $monthName $year
                         <a href='/gestionConges/liste/".(($month%12)? $year : $year+1)."/".(($month%12)+1)."'> → </a>
                     </caption>";
         $calendar .= "<tr>";
@@ -114,6 +113,5 @@
     $conges = getCongeFromSalaried($_SESSION['id']);
     $arrayDate = array();
     if(!empty($conges)) foreach($conges as $key => $conge) foreach($dates = date_range($conge['start'], $conge['end'], '+1 day') as $d) $arrayDate[$d] = array($conge['type'], $conge['status']);
-
     echo create_calendar($month,$year,$arrayDate);
 ?> 

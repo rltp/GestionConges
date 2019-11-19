@@ -38,11 +38,11 @@
         </span>
         <span>
             <label for="startday">Date de début</label>
-            <input type="text" name="startDay" id="startDay" value="15-09-2020">
+            <input type="text" name="startDay" id="startDay" placeholder="ex: 15-09-2020">
         </span>
         <span>
             <label for="endday">Date de fin</label>
-            <input type="text" name="endDay" id="endDay" value="18-09-2020">
+            <input type="text" name="endDay" id="endDay" placeholder="ex: 15-09-2020">
         </span>
     </fieldset>
     <span>
