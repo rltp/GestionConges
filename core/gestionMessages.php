@@ -44,10 +44,10 @@
     function getTalks($id){
         global $con;
 
-        if (!$stmt = $con->prepare('SELECT id, fromID, seen FROM `comments` WHERE id IN(SELECT max(id) FROM `comments` WHERE toId = ? OR fromID= ? GROUP BY fromID ORDER BY id DESC) AND fromID != ? GROUP BY fromID ORDER BY id DESC, seen ASC'))
+        if (!$stmt = $con->prepare('SELECT Z.id, Z.win as fromID, Z.seen FROM (SELECT id, fromID as win, seen FROM `comments` WHERE fromID != ? AND toID = ? UNION SELECT id, toID as win, seen FROM `comments` WHERE fromID = ? AND toID != ?) AS Z GROUP BY Z.win ORDER BY Z.id DESC, Z.seen ASC'))
             die("requete non valide");
         
-        $stmt->bind_param('iii', $id, $id, $id);
+        $stmt->bind_param('iiii', $id, $id, $id, $id);
         $stmt->execute();
         $stmt->store_result();
         $meta = $stmt->result_metadata(); 
