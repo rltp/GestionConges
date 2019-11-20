@@ -20,6 +20,8 @@
                 if(isset($_POST['typeConge'], $_POST['startDay'],$_POST['endDay'])){
                     $errors = array();
                     $edit_args =  array_intersect_key($args, array_flip(array('typeConge', 'startDay', 'endDay')));
+                    $_POST = array_map('trim', $_POST);
+                    $_POST = array_map('strip_tags', $_POST);
                     $_POST =  array_intersect_key($_POST, array_flip(array('typeConge', 'startDay', 'endDay')));
                     foreach($_POST as $key => $value) if(empty($value)) unset($_POST[$key]);
                     foreach(($data = filter_var_array($_POST, $edit_args)) as $key => $value) if($value === false) array_push($errors, $edit_args[$key]["error"]);
@@ -37,6 +39,8 @@
                     if(isset($_POST['status'])){
                         $errors = array();
                         $edit_args =  array_intersect_key($args, array_flip(array('status', 'message')));
+                        $_POST = array_map('trim', $_POST);
+                        $_POST = array_map('strip_tags', $_POST);
                         $_POST =  array_intersect_key($_POST, array_flip(array('status', 'message')));
                         foreach($_POST as $key => $value) if(empty($value)) unset($_POST[$key]);
                         foreach(($data = filter_var_array($_POST, $edit_args)) as $key => $value) if($value === false) array_push($errors, $edit_args[$key]["error"]);

@@ -11,6 +11,8 @@
 
                 if(isset($_POST['lastname'], $_POST['firstname'], $_POST['email'], $_POST['phone'], $_POST['function'], $_POST['contract'], $_POST['date'], $_POST['RTT'], $_POST['CP'])){
                     $edit_args =  array_intersect_key($args, array_flip(array('lastname', 'firstname', 'email', 'phone', 'function', 'contract', 'date', 'RTT', 'CP', 'situation', 'address', 'sexe', 'nationality', 'birthday')));
+                    $_POST = array_map('trim', $_POST);
+                    $_POST = array_map('strip_tags', $_POST);
                     $_POST =  array_intersect_key($_POST, array_flip(array('lastname', 'firstname', 'email', 'phone', 'function', 'contract', 'date', 'RTT', 'CP', 'situation', 'address', 'sexe', 'nationality', 'birthday')));
                     foreach($_POST as $key => $value) if(empty($value)) unset($_POST[$key]);
                     foreach(($data = filter_var_array($_POST, $edit_args)) as $key => $value) if($value === false) array_push($errors, $edit_args[$key]["error"]);
@@ -30,6 +32,8 @@
                 if(isset($_POST['lastname'], $_POST['firstname'], $_POST['phone'], $_POST['function'], $_POST['contract'])){
                     $errors = array();
                     $edit_args =  array_intersect_key($args, array_flip(array('lastname', 'firstname','phone', 'function', 'contract', 'situation', 'address', 'birthday')));
+                    $_POST = array_map('trim', $_POST);
+                    $_POST = array_map('strip_tags', $_POST);
                     $_POST =  array_intersect_key($_POST, array_flip(array('lastname', 'firstname','phone', 'function', 'contract', 'situation', 'address', 'birthday')));
                     foreach($_POST as $key => $value) if(empty($value)) unset($_POST[$key]);
                     foreach(($data = filter_var_array($_POST, $edit_args)) as $key => $value) if($value === false) array_push($errors, $edit_args[$key]["error"]);
@@ -46,14 +50,19 @@
                 break;
             case "":
                 $messages = array();
-                if(!empty($_POST)) foreach($_POST as $id => $email) {
-                    $messages[$id] = removeSalaried($id);
-                    if(!empty(($f = glob($_SERVER['DOCUMENT_ROOT']."/media/upload/Pics/".$id.".*"))))
-                        unlink($f[0]);
-                        
-                    if(!empty(($f = glob($_SERVER['DOCUMENT_ROOT']."/media/upload/CVs/".$id.".*"))))
-                        unlink($f[0]);
+                if(!empty($_POST)) {
+                    $_POST = array_map('trim', $_POST);
+                    $_POST = array_map('strip_tags', $_POST);
+                    foreach($_POST as $id => $email) {
+                        $messages[$id] = removeSalaried($id);
+                        if(!empty(($f = glob($_SERVER['DOCUMENT_ROOT']."/media/upload/Pics/".$id.".*"))))
+                            unlink($f[0]);
+                            
+                        if(!empty(($f = glob($_SERVER['DOCUMENT_ROOT']."/media/upload/CVs/".$id.".*"))))
+                            unlink($f[0]);
+                    }
                 }
+                
                 include("list.php");
                 break;
             default:

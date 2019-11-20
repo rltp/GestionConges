@@ -32,6 +32,8 @@
 
     global $route;
     $route = explode("/", substr($_SERVER['REQUEST_URI'],1));
+    $route = array_map('trim', $route);
+    $route = array_map('strip_tags', $route);
 
     $view = $route[0];
     $subview = (isset($route[1])) ? $route[1] : "";

@@ -14,6 +14,8 @@
                 if(isset($_POST['lastname'], $_POST['firstname'], $_POST['phone'])){
                     $errors = array();
                     $edit_args =  array_intersect_key($args, array_flip(array('lastname', 'firstname','phone', 'situation', 'address', 'birthday')));
+                    $_POST = array_map('trim', $_POST);
+                    $_POST = array_map('strip_tags', $_POST);
                     $_POST =  array_intersect_key($_POST, array_flip(array('lastname', 'firstname','phone', 'situation', 'address', 'birthday')));
                     foreach($_POST as $key => $value) if(empty($value)) unset($_POST[$key]);
                     foreach(($data = filter_var_array($_POST, $edit_args)) as $key => $value) if($value === false) array_push($errors, $edit_args[$key]["error"]);

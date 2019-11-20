@@ -15,13 +15,19 @@
             case "consultation":
                 $errors = array();
                 if(isset($_POST['message'], $_POST['toID'])){
+                    $_POST = array_map('trim', $_POST);
+                    $_POST = array_map('strip_tags', $_POST);
                     $edit_args =  array_intersect_key($args, array_flip(array('message', 'toID')));
                     $_POST =  array_intersect_key($_POST, array_flip(array('message', 'toID')));
                     foreach($_POST as $key => $value) if(empty($value)) unset($_POST[$key]);
                     foreach(($data = filter_var_array($_POST, $edit_args)) as $key => $value) if($value === false) array_push($errors, $edit_args[$key]["error"]);
                     if(empty($errors)) if(($sql = addComment($_SESSION['id'], $data['message'], $data['toID'])) !== null) array_push($errors, $sql);
                 }
-                if(isset($_POST['remove']) && $_SESSION['level']) removeComment($_POST['remove']);
+                if(isset($_POST['remove']) && $_SESSION['level']){
+                    $_POST = array_map('trim', $_POST);
+                    $_POST = array_map('strip_tags', $_POST);
+                    removeComment($_POST['remove']);
+                }
                 $talks = getTalks($_SESSION['id']);
                 include("consultation.php");
                 break;
@@ -29,6 +35,8 @@
                 if($_SESSION['level']) header("location: /gestionMessages/consultation");
                 $errors = array();
                 if(isset($_POST['message'])){
+                    $_POST = array_map('trim', $_POST);
+                    $_POST = array_map('strip_tags', $_POST);
                     $edit_args =  array_intersect_key($args, array_flip(array('message')));
                     $_POST =  array_intersect_key($_POST, array_flip(array('message')));
                     foreach($_POST as $key => $value) if(empty($value)) unset($_POST[$key]);
