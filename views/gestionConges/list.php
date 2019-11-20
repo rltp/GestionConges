@@ -78,7 +78,7 @@
                     case 2: $class = "allowed"; break;
                     default: $class = ""; break;
                 }
-                $calendar .= "<td class='day {$class}' rel='$date'><h3>$currentDay</h3><label>{$event[0]}</label></td>";
+                $calendar .= "<td class='day' rel='$date'><h3>$currentDay</h3><label class='{$class}'>{$event[0]}</label></td>";
             } else
                 $calendar .= "<td class='day' rel='$date'><h3>$currentDay</h3></td>";
             

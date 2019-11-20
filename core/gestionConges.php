@@ -96,13 +96,12 @@
         if(!empty($result)) return $result;
     }
 
-    function getAllConge($status){
+    function getAllConge(){
         global $con;
 
-        if (!$stmt = $con->prepare('SELECT * FROM `conges` WHERE status = ?'))
+        if (!$stmt = $con->prepare('SELECT * FROM `conges` '))
             die("requete non valide");
         
-        $stmt->bind_param('i', $status);
         $stmt->execute();
         $stmt->store_result();
         $meta = $stmt->result_metadata(); 
@@ -142,6 +141,70 @@
         $stmt->close();
 
         if(!empty($result[0])) return $result[0];
+    }
+
+    function getCongeInfos($id){
+        global $con;
+
+        if (!$stmt = $con->prepare("SELECT s.id, c.type, c.start, c.date, c.end, c.status, s.email, s.lastname, s.firstname, DATEDIFF(STR_TO_DATE(c.end, '%d-%m-%Y'), STR_TO_DATE(c.start, '%d-%m-%Y')) as datediff FROM conges c join salarie s ON c.salaried = s.id WHERE c.id = ?"))
+            die("requete non valide");
+        
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $stmt->store_result();
+        $meta = $stmt->result_metadata(); 
+
+        while ($field = $meta->fetch_field()) {$params[] = &$row[$field->name];}
+
+        call_user_func_array(array($stmt, 'bind_result'), $params); 
+
+        while ($stmt->fetch()) { 
+            foreach($row as $key => $val) $c[$key] = $val;
+            $result[] = $c; 
+        } 
+        $stmt->close();
+
+        if(!empty($result[0])) return $result[0];
+    }
+
+    function getCongesFromDate($date){
+        global $con;
+
+        if (!$stmt = $con->prepare("SELECT * FROM `conges` WHERE STR_TO_DATE(start, '%d-%m-%Y') <= STR_TO_DATE(?, '%d-%m-%Y') AND STR_TO_DATE(end, '%d-%m-%Y') >= STR_TO_DATE(?, '%d-%m-%Y') ORDER BY status, date"))
+            die("requete non valide");
+        
+        $stmt->bind_param('ss', $date, $date);
+        $stmt->execute();
+        $stmt->store_result();
+        $meta = $stmt->result_metadata(); 
+
+        while ($field = $meta->fetch_field()) {$params[] = &$row[$field->name];}
+
+        call_user_func_array(array($stmt, 'bind_result'), $params); 
+
+        while ($stmt->fetch()) { 
+            foreach($row as $key => $val) $c[$key] = $val;
+            $result[] = $c; 
+        } 
+        $stmt->close();
+
+        if(!empty($result)) return $result;
+    }
+
+    function updateConge($id, $status) {
+        global $con;
+
+        $array = [];
+
+        try{
+            if(!$stmt = $con->prepare("UPDATE `conges` SET status = ? WHERE id= ?")) throw new Exception("Requete non valide");
+            $stmt->bind_param('ii', $status, $id);
+            if(!$stmt->execute()) throw new Exception("Requete non executé");
+            $stmt->close();
+        }catch(Exception $e){
+           return $e->getMessage();
+        }
+        return;
     }
 
     function date_range($first, $last, $step) {

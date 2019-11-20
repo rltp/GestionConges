@@ -92,6 +92,12 @@
             "filter" => FILTER_VALIDATE_INT,
             "error" => "ID non valide"
             ),
+        "status" =>
+            array(
+                "filter" => FILTER_VALIDATE_REGEXP,
+                "options"=> array("regexp"=>"/^(2|1)$/"),
+                "error" => "Le status ne doit pas etre autre que les deux options"
+            ),
         "typeConge" =>
             array(
                 "filter" => FILTER_VALIDATE_REGEXP,
