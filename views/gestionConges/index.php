@@ -48,8 +48,9 @@
                         if(empty($errors)){
                             $status = ($data['status'] === 1) ? "Refus" : "Acceptation";
                             $message = empty($data['message'])? "" : "{$data['message']}<br/>";
-                            addComment($infos['id'], $status." du {$infos['type']} RTT {$infos['start']} au {$infos['end']}<br/>$message<a href='/gestionConges/voir/{$parameter}'>Consulter</a>");
+                            addComment($_SESSION['id'], $status." du {$infos['type']} {$infos['start']} au {$infos['end']}<br/>$message<a href='/gestionConges/voir/{$parameter}'>Consulter</a>", $infos['id']);
                         }
+                        $infos['status'] = $data['status'];
                     }
                     include('validate_form.php');
                 } else {

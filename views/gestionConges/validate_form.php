@@ -54,9 +54,9 @@
         <span>
             <label for="type">Statut</label>
             <span id="type" style="display:inline;">
-                <input type="radio" name="status" id="allowed" value="2" <?= ($infos['status']===1)? "checked" : ""?>>
+                <input type="radio" name="status" id="allowed" value="2" <?= ($infos['status']===2)? "checked" : ""?>>
                 <label for="allowed">Accepter</label>
-                <input type="radio" name="status" id="denied" value="1" <?= ($infos['status']===2)? "checked" : ""?>>
+                <input type="radio" name="status" id="denied" value="1" <?= ($infos['status']===1)? "checked" : ""?>>
                 <label for="denied">Refuser</label>
             </span>     
         </span>

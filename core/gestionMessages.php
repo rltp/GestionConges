@@ -30,6 +30,7 @@
     function addComment($id, $message, $toID=1){
         global $con;
         $stmt;
+        
         try{
             if(!$stmt = $con->prepare("INSERT INTO Comments (toID, fromID, comment, date, seen) VALUES(?, ?, ?, NOW(), 0)")) throw new Exception("Requete non valide");
             $stmt->bind_param('iis', $toID, $id, $message);
