@@ -27,7 +27,7 @@
         if(!empty($result[0])) return $result[0];
     }
 
-    function checkConge($id, $start, $end){
+    function checkConge($id, $start, $end, $type){
         global $con;
         $stmt;
         try{
@@ -36,6 +36,24 @@
             if(!$stmt->execute()) throw new Exception("Requete non executé");
             if($stmt->affected_rows == 0) throw new Exception("Aucune ligne affecté");
             if($stmt->fetch()) throw new Exception("Congé déjà posé durant cette période");
+            $stmt->close();
+
+            if(!$stmt = $con->prepare("SELECT (s.RTT - MAX(CASE WHEN c.type = 'RTT' THEN c.diff ELSE NULL END)) AS RTT, (s.CP - MAX(CASE WHEN c.type = 'CP' THEN c.diff ELSE NULL END)) AS CP FROM (SELECT SUM(DATEDIFF(STR_TO_DATE(end, '%d-%m-%Y'), STR_TO_DATE(start, '%d-%m-%Y'))) as diff, type, salaried FROM conges WHERE salaried=? AND status !=1 GROUP BY type) as c JOIN salarie AS s ON s.id = c.salaried GROUP BY c.salaried")) throw new Exception("Requete non valide");
+            $stmt->bind_param('i', $id);
+            if(!$stmt->execute()) throw new Exception("Requete non executé");
+            $meta = $stmt->result_metadata(); 
+
+            while ($field = $meta->fetch_field()) {$params[] = &$row[$field->name];}
+    
+            call_user_func_array(array($stmt, 'bind_result'), $params); 
+    
+            while ($stmt->fetch()) { 
+                foreach($row as $key => $val) $c[$key] = $val;
+                $result[] = $c; 
+            }
+
+            if(intval($result[0][$type]) < date_diff(date_create($start), date_create($end))->days)
+                throw new Exception("Vous n'avez pas assez de ".$type);
             $stmt->close();
             return true;
         }catch(Exception $e){

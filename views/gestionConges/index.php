@@ -25,7 +25,7 @@
                     $_POST =  array_intersect_key($_POST, array_flip(array('typeConge', 'startDay', 'endDay')));
                     foreach($_POST as $key => $value) if(empty($value)) unset($_POST[$key]);
                     foreach(($data = filter_var_array($_POST, $edit_args)) as $key => $value) if($value === false) array_push($errors, $edit_args[$key]["error"]);
-                    if(empty($errors)) if(($check = checkConge($_SESSION['id'], $data['startDay'], $data['endDay'])) !== true) array_push($errors, $check);
+                    if(empty($errors)) if(($check = checkConge($_SESSION['id'], $data['startDay'], $data['endDay'], $data['typeConge'])) !== true) array_push($errors, $check);
                     if(empty($errors)) if(($sql = addConge($_SESSION['id'], $data['typeConge'], $data['startDay'], $data['endDay'])) !== null && !is_int($sql)) array_push($errors, $sql);
                     if(empty($errors)) addComment($_SESSION['id'], "[{$data['typeConge']}] Demande de congé du {$data['startDay']} au {$data['endDay']}<br/><a href='/gestionConges/voir/{$sql}'>Consulter</a>");
                 }
@@ -48,7 +48,7 @@
                         if(empty($errors)){
                             $status = ($data['status'] === 1) ? "Refus" : "Acceptation";
                             $message = empty($data['message'])? "" : "{$data['message']}<br/>";
-                            addComment($_SESSION['id'], $status." du {$infos['type']} {$infos['start']} au {$infos['end']}<br/>$message<a href='/gestionConges/voir/{$parameter}'>Consulter</a>", $infos['id']);
+                            addComment($_SESSION['id'], $status." du {$infos['type']} pour le {$infos['start']} au {$infos['end']}<br/>$message<a href='/gestionConges/voir/{$parameter}'>Consulter</a>", $infos['id']);
                         }
                         $infos['status'] = $data['status'];
                     }
