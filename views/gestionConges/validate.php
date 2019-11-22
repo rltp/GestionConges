@@ -133,7 +133,7 @@
                 <img class="pic" src="/media/upload/Pics/<?= $leave['salaried'] ?>" width="50" height="50"\>
                 <span class="talk_content">
                     <h3><?= $salaried['firstname']." ".$salaried['lastname'] ?></h3>
-                    <span>[<?= $leave['type']?>] Demande du <?= $leave['start']?> au <?= $leave['end']?></span>
+                    <span>[<?= $leave['type']?>] Demande du <?= $leave['start']?> au <?= $leave['end']?> (<?= $leave['diff']?> jours)</span>
                 </span>
             </a>
         <?php } }else{ ?>

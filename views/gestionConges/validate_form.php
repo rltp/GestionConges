@@ -8,7 +8,7 @@
 
 <form method="post">
     <fieldset>
-        <legend>Valideation du <?= $infos['type']; ?></legend>
+        <legend>Confirmation du <?= $infos['type']; ?></legend>
         <span>
             <label>
                 <u>Prenom :</u>

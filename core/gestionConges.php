@@ -188,7 +188,7 @@
     function getCongesFromDate($date){
         global $con;
 
-        if (!$stmt = $con->prepare("SELECT * FROM `conges` WHERE STR_TO_DATE(start, '%d-%m-%Y') <= STR_TO_DATE(?, '%d-%m-%Y') AND STR_TO_DATE(end, '%d-%m-%Y') >= STR_TO_DATE(?, '%d-%m-%Y') ORDER BY status, date"))
+        if (!$stmt = $con->prepare("SELECT *, DATEDIFF(STR_TO_DATE(end, '%d-%m-%Y'), STR_TO_DATE(start, '%d-%m-%Y')) as diff FROM `conges` WHERE STR_TO_DATE(start, '%d-%m-%Y') <= STR_TO_DATE(?, '%d-%m-%Y') AND STR_TO_DATE(end, '%d-%m-%Y') >= STR_TO_DATE(?, '%d-%m-%Y') ORDER BY status, date"))
             die("requete non valide");
         
         $stmt->bind_param('ss', $date, $date);
