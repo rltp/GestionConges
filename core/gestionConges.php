@@ -164,7 +164,7 @@
     function getCongeInfos($id){
         global $con;
 
-        if (!$stmt = $con->prepare("SELECT s.id, c.type, c.start, c.date, c.end, c.status, s.email, s.lastname, s.firstname, DATEDIFF(STR_TO_DATE(c.end, '%d-%m-%Y'), STR_TO_DATE(c.start, '%d-%m-%Y')) as datediff FROM conges c join salarie s ON c.salaried = s.id WHERE c.id = ?"))
+        if (!$stmt = $con->prepare("SELECT s.id, c.type, c.start, c.date, c.end, c.status, s.email, s.lastname, s.firstname, (DATEDIFF(STR_TO_DATE(c.end, '%d-%m-%Y'), STR_TO_DATE(c.start, '%d-%m-%Y')) + 1) as datediff FROM conges c join salarie s ON c.salaried = s.id WHERE c.id = ?"))
             die("requete non valide");
         
         $stmt->bind_param('i', $id);
@@ -188,7 +188,35 @@
     function getCongesFromDate($date){
         global $con;
 
-        if (!$stmt = $con->prepare("SELECT *, DATEDIFF(STR_TO_DATE(end, '%d-%m-%Y'), STR_TO_DATE(start, '%d-%m-%Y')) as diff FROM `conges` WHERE STR_TO_DATE(start, '%d-%m-%Y') <= STR_TO_DATE(?, '%d-%m-%Y') AND STR_TO_DATE(end, '%d-%m-%Y') >= STR_TO_DATE(?, '%d-%m-%Y') ORDER BY status, date"))
+        if (!$stmt = $con->prepare("SELECT *, (DATEDIFF(STR_TO_DATE(end, '%d-%m-%Y'), STR_TO_DATE(start, '%d-%m-%Y')) + 1) as diff FROM `conges` WHERE STR_TO_DATE(start, '%d-%m-%Y') <= STR_TO_DATE(?, '%d-%m-%Y') AND STR_TO_DATE(end, '%d-%m-%Y') >= STR_TO_DATE(?, '%d-%m-%Y') ORDER BY status, date"))
+            die("requete non valide");
+        
+        $stmt->bind_param('ss', $date, $date);
+        $stmt->execute();
+        $stmt->store_result();
+        $meta = $stmt->result_metadata(); 
+
+        while ($field = $meta->fetch_field()) {$params[] = &$row[$field->name];}
+
+        call_user_func_array(array($stmt, 'bind_result'), $params); 
+
+        while ($stmt->fetch()) { 
+            foreach($row as $key => $val) $c[$key] = $val;
+            $result[] = $c; 
+        } 
+        $stmt->close();
+
+        if(!empty($result)) return $result;
+    }
+
+
+    function getCongesFromMonth($month){
+        global $con;
+
+        $date = "%-".$month;
+
+        if (!$stmt = $con->prepare("SELECT *, (DATEDIFF(STR_TO_DATE(end, '%d-%m-%Y'), STR_TO_DATE(start, '%d-%m-%Y')) + 1) as diff 
+                                    FROM `conges` WHERE  start LIKE ? OR end LIKE ? ORDER BY status, date"))
             die("requete non valide");
         
         $stmt->bind_param('ss', $date, $date);

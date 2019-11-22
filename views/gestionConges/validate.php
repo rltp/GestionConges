@@ -112,12 +112,14 @@
 
     echo create_calendar($month,$year,$arrayDate);
 
+    if($month < 10) $month = '0'.$month;
+
     if(!empty($route[4])){
         $leaves = getCongesFromDate($route[4]);
 ?>
     <div class="modal <?= (!empty($leaves))? 'open': "" ?>">
         <div class="modal-window">
-            <a class="close" href="<?= "gestionConges/valider/$year/$month"?>"><img src="/media/img/x.svg" alt="Fermer"/></a>
+            <a class="close" href="<?= "/gestionConges/valider/$year/$month"?>"><img src="/media/img/x.svg" alt="Fermer"/></a>
             <h1 style="margin: 25px">Congé(s) du <?= $route[4]?></h1>
             <?php
                 if(!empty($leaves)){
@@ -142,3 +144,23 @@
         </div>
     </div>
 <?php } ?> 
+<h2 style="margin-bottom:25px">Congé(s) du mois</h2>
+<?php
+    $leaves = getCongesFromMonth($month.'-'.$year);
+    if(!empty($leaves)){
+        foreach($leaves as $leave){
+            $salaried = getInfos($leave['salaried']);
+            switch($leave['status']){
+                case 0: $class = "warning"; break;
+                case 1: $class = "error"; break;
+                case 2: $class = "success"; break;
+            }
+    ?>
+    <a class="talk messagebox <?= $class?>" href="/gestionConges/voir/<?= $leave['id'] ?>">
+        <img class="pic" src="/media/upload/Pics/<?= $leave['salaried'] ?>" width="50" height="50"\>
+        <span class="talk_content">
+            <h3><?= $salaried['firstname']." ".$salaried['lastname'] ?></h3>
+            <span>[<?= $leave['type']?>] Demande du <?= $leave['start']?> au <?= $leave['end']?> (<?= $leave['diff']?> jours)</span>
+        </span>
+    </a>
+<?php } } ?>
