@@ -13,12 +13,13 @@
             case "modifier":
                 if(isset($_POST['lastname'], $_POST['firstname'], $_POST['phone'])){
                     $errors = array();
-                    $edit_args =  array_intersect_key($args, array_flip(array('lastname', 'firstname','phone', 'situation', 'address', 'birthday')));
+                    $edit_args =  array_intersect_key($args, array_flip(array('lastname', 'firstname','phone', 'situation', 'address', 'birthday', 'password')));
                     $_POST = array_map('trim', $_POST);
                     $_POST = array_map('strip_tags', $_POST);
-                    $_POST =  array_intersect_key($_POST, array_flip(array('lastname', 'firstname','phone', 'situation', 'address', 'birthday')));
+                    $_POST =  array_intersect_key($_POST, array_flip(array('lastname', 'firstname','phone', 'situation', 'address', 'birthday', 'password')));
                     foreach($_POST as $key => $value) if(empty($value)) unset($_POST[$key]);
                     foreach(($data = filter_var_array($_POST, $edit_args)) as $key => $value) if($value === false) array_push($errors, $edit_args[$key]["error"]);
+                    if(empty($errors) && isset($data['password'])) if(!isUniqPassword(MD5($data['password']))) array_push($errors, "Le mot de passe n'est pas unique"); else $data['password'] = md5($data['password']);
                     if(empty($errors)) if(($sql = editProfile($_SESSION['id'], $data))!==null) array_push($errors, $sql);
                 }
                 $infos = getProfile($_SESSION['id']);

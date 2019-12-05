@@ -5,9 +5,8 @@
     function addSalaried($infos){
         global $con;
         $stmt;
-        $password = uniqid();
         $table = "id,isAdmin,password";
-        $value = "null,0,'".md5($password)."'";
+        $value = "null,0,null";
 
         foreach($infos as $key => $val){
             $table .= ",".$key;
@@ -18,10 +17,6 @@
             if(!$stmt = $con->prepare("INSERT INTO `salarie` ( ".$table." ) VALUES (".$value.")")) throw new Exception("Requete non valide");
             if(!$stmt->execute()) throw new Exception("Requete non executé");
             $stmt->close();
-            //mail($infos['email'], "ESME: Gestion des congés payé",
-            //    "Login : ".$infos['email']."\n".
-            //    "Mot de passe : ".$password."\n", "From:raphael.portell@gmail.com"
-            //);
         }catch(Exception $e){
             return $e->getMessage();
         }

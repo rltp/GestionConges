@@ -26,6 +26,10 @@
     <fieldset>
         <legend>Facultatif</legend>
         <span>
+            <label for="password">Mot de passe</label>
+            <input type="password" name="password" id="password">
+        </span>
+        <span>
             <label for="address">Adresse</label>
             <input type="text" name="address" id="address" placeholder="ex : 92201, Gagny, 123 avenue sesame" value="<?= $infos['address']?>">
         </span>

@@ -115,6 +115,12 @@
                 "filter" => FILTER_VALIDATE_REGEXP,
                 "options"=> array("regexp"=>"/^([0-2][0-9]|(3)[0-1])(\-)(((0)[0-9])|((1)[0-2]))(\-)\d{4}$/"),
                 "error" => "La  date de fin de congé doit être sous forme aaaa-mm-jj"
+            ),
+        "password" =>
+            array(
+                "filter" => FILTER_VALIDATE_REGEXP,
+                "options"=> array("regexp"=>"/^[A-Z]+.{6,}[0-9]$/"),
+                "error" => "Le mot de passe doit comencer par une majuscule, et terminer par un chiffre"
             )
     );
 ?>

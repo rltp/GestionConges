@@ -26,6 +26,22 @@
         if(!empty($result[0])) return $result[0];
     }
 
+    function isUniqPassword($password){
+        global $con;
+        try{
+            if(!$stmt = $con->prepare("SELECT * FROM `salarie` WHERE password=?")) throw new Exception("Requete non valide");
+            $stmt->bind_param('s', $password);
+            if(!$stmt->execute()) throw new Exception("Requete non executé");
+            while($stmt->fetch()) {}
+            if($stmt->num_rows > 0) throw new Exception("Plusieurs lignes affectés");
+            $stmt->close();
+            return true;
+        }catch(Exception $e){
+            return false;
+        }
+    }
+
+
     function editProfile($id, $infos){
         global $con;
 
