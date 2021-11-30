@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `salarie` (
 --
 
 INSERT INTO `salarie` (`id`, `isAdmin`, `lastname`, `firstname`, `email`, `password`, `phone`, `function`, `contract`, `date`, `RTT`, `CP`, `address`, `nationality`, `sexe`, `situation`, `birthday`) VALUES
-(1, 1, 'PORTELL', 'Raphael', 'raphael.portell@gmail.com', 'f71dbe52628a3f83a77ab494817525c6', 652519078, 'Administrateur', 'CDI', '2019-11-09', 14, 15, '93220, Gagny, 3 rue jean stephan', 'Française', 'male', 'alone', '2019-11-08'),
+(1, 1, 'Super', 'Admin', 'admin@esme.fr', 'f71dbe52628a3f83a77ab494817525c6', 652519078, 'Administrateur', 'CDI', '2019-11-09', 14, 15, '', 'Française', 'male', 'alone', '2019-11-08'),
 (2, 0, 'POP', 'Pean', 'jean.doe.735@esme.fr', 'f71dbe52628a3f83a77ab494817525c6', 659874596, 'P', 'CDD', '2006-06-19', 12, 15, '', 'Française', 'female', 'alone', '1988-06-19'),
 (3, 0, 'ROI', 'Jean', 'jean.doe.7@esme.fr', 'f71dbe52628a3f83a77ab494817525c6', 659874596, 'P', 'CDD', '2006-06-19', 12, 15, '92201, Gagny, 123 avenue sesame', 'Franï¿½aise', 'female', 'alone', '1988-06-19'),
 (21, 0, 'Doz', 'Jean', 'jean.doe.1145@esme.fr', 'd4e1b2261456dd2e061218252e07ab6c', 659874596, '', 'CDD', '2006-06-19', 12, 15, '92201, Gagny, 123 avenue sesame noo', 'FranÃ§aise', 'female', 'alone', '1988-06-19'),
